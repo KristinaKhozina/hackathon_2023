@@ -23,7 +23,7 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("ReactPolicy", builder =>
     {
-        builder.WithOrigins("http://localhost:5173")
+        builder.WithOrigins("https://hackathon-2023-p9o3.vercel.app")
         .AllowAnyMethod()
         .AllowAnyHeader();
     });

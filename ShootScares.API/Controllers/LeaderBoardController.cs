@@ -5,7 +5,7 @@ using ShootScares.API.Models;
 
 namespace ShootScares.API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/leader-board")]
     [ApiController]
     public class LeaderBoardController : ControllerBase
     {
