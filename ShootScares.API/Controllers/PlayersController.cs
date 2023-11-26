@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
 using ShootScares.API.Data;
 using ShootScares.API.Domain.Entities;
 using ShootScares.API.Models;
@@ -40,9 +39,7 @@ namespace ShootScares.API.Controllers
                     });
                 }
 
-                var playerModel = new PlayerModel();
-                playerModel.Id = player.Id;
-                playerModel.Name = player.Name;
+                var playerModel = (PlayerModel)player;
                 playerModel.Results = resultsModels;
                 playersModels.Add(playerModel);
             }
@@ -66,17 +63,15 @@ namespace ShootScares.API.Controllers
             foreach (var result in player.Results.ToList())
             {
                 var resultModel = new GameResultModel();
+                resultModel.Id = result.Id;
+                resultModel.PlayerId = player.Id;
                 resultModel.Score = result.Score;
                 resultModel.Date = result.Date.ToString("HH:mm dd/MM/yy");
                 results.Add(resultModel);
             }
 
-            var model = new PlayerModel()
-            {
-                Id = player.Id,
-                Name = player.Name,
-                Results = results
-            };
+            var model = (PlayerModel)player;
+            model.Results = results;
 
             return Ok(model);
         }
@@ -101,7 +96,7 @@ namespace ShootScares.API.Controllers
                 Date = result.Date.ToString("HH:mm dd/MM/yy")
             };
 
-            var returnModel = new PlayerModel { Id = player.Id, Name = player.Name };
+            var returnModel = (PlayerModel)player;
             returnModel.Results.Add(resultModel);
 
             return CreatedAtAction(nameof(GetById),
@@ -127,11 +122,8 @@ namespace ShootScares.API.Controllers
             }
             player.Name = name;
             var updated = playersRepository.Update(player);
-            var model = new PlayerModel
-            {
-                Id = updated.Id,
-                Name = updated.Name
-            };
+
+            var model = (PlayerModel)updated;
 
             return Ok(model);
         }
