@@ -22,13 +22,7 @@ namespace ShootScares.API.Controllers
             var resultModels = new List<GameResultModel>();
             foreach (var result in results)
             {
-                var resultModel = new GameResultModel
-                {
-                    Id = result.Id,
-                    PlayerId = result.PlayerId,
-                    Score = result.Score,
-                    Date = result.Date.ToString("HH:mm dd/MM/yy"),
-                };
+                var resultModel = (GameResultModel)result;
                 resultModels.Add(resultModel);
             }
 
@@ -45,13 +39,7 @@ namespace ShootScares.API.Controllers
             {
                 return NotFound();
             }
-            var resultModel = new GameResultModel
-            {
-                Id = result.Id,
-                PlayerId = result.PlayerId,
-                Score = result.Score,
-                Date = result.Date.ToString("HH:mm dd/MM/yy")
-            };
+            var resultModel = (GameResultModel)result;
 
             return Ok(resultModel);
         }
@@ -73,13 +61,7 @@ namespace ShootScares.API.Controllers
                 return BadRequest();
             }
 
-            var addedModel = new GameResultModel
-            {
-                Id = added.Id,
-                PlayerId = added.PlayerId,
-                Score = added.Score,
-                Date = added.Date.ToString("HH:mm dd/MM/yy")
-            };
+            var addedModel = (GameResultModel)added;
 
             return CreatedAtAction(nameof(GetById),
                 new { id = addedModel.Id }, addedModel);
