@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using ShootScares.API.Data;
 using ShootScares.API.Models;
 
@@ -20,19 +19,19 @@ namespace ShootScares.API.Controllers
         }
 
         [HttpGet]
-        public ActionResult<LeaderBoardItem> Get()
+        public ActionResult<IEnumerable<LeaderBoardItem>> Get()
         {
             var leaderBoard = new List<LeaderBoardItem>();
             var topResults = gameResultsRepository.GetTopResults(5);
-            foreach (var res in topResults)
+            foreach (var result in topResults)
             {
                 var item = new LeaderBoardItem();
                 item.Username = playersRepository
-                    .Get(res.PlayerId)
+                    .Get(result.PlayerId)
                     .FirstOrDefault()!
                     .Name;
-                item.Score = res.Score;
-                item.Date = res.Date.ToString("HH:mm dd/MM/yy");
+                item.Score = result.Score;
+                item.Date = result.Date.ToString("HH:mm dd/MM/yy");
                 leaderBoard.Add(item);
             }
             return Ok(leaderBoard);
