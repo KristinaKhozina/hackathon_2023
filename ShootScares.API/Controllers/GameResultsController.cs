@@ -5,7 +5,7 @@ using ShootScares.API.Models;
 
 namespace ShootScares.API.Controllers
 {
-    [Route("api/game-results")]
+    [Route("api/results")]
     [ApiController]
     public class GameResultsController : ControllerBase
     {

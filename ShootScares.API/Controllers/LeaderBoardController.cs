@@ -4,14 +4,14 @@ using ShootScares.API.Models;
 
 namespace ShootScares.API.Controllers
 {
-    [Route("api/leader-board")]
+    [Route("api/leaderboard")]
     [ApiController]
-    public class LeaderBoardController : ControllerBase
+    public class LeaderboardController : ControllerBase
     {
         private readonly PlayersRepository playersRepository;
         private readonly GameResultsRepository gameResultsRepository;
 
-        public LeaderBoardController(PlayersRepository playersRepository,
+        public LeaderboardController(PlayersRepository playersRepository,
             GameResultsRepository gameResultsRepository)
         {
             this.playersRepository = playersRepository;
@@ -19,13 +19,13 @@ namespace ShootScares.API.Controllers
         }
 
         [HttpGet]
-        public ActionResult<IEnumerable<LeaderBoardItem>> Get()
+        public ActionResult<IEnumerable<LeaderboardItem>> Get()
         {
-            var leaderBoard = new List<LeaderBoardItem>();
+            var leaderBoard = new List<LeaderboardItem>();
             var topResults = gameResultsRepository.GetTopResults(5);
             foreach (var result in topResults)
             {
-                var item = new LeaderBoardItem();
+                var item = new LeaderboardItem();
                 item.Username = playersRepository
                     .Get(result.PlayerId)
                     .FirstOrDefault()!
